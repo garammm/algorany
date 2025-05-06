@@ -26,5 +26,5 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: ${{ env.TODAY_DATE }} 문제 풀이 기록
-          commit_user_name: "Garam Yu"
-          commit_author: "Garam Yu"
+          commit_user_name: "Garam Yu <garam020102@hanmail.net>"
+          commit_author: "Garam Yu <garan020102@hanmail.net>"
