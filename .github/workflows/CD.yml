@@ -1,49 +1,30 @@
-name: Move Algorithm Files to Date Folder
-
+name: 알고리즘 문제풀이 기록
 on:
   push:
-    paths:
-      - "*.py"
-
+    branches:
+      - "main"
 jobs:
-  move_and_commit:
+  Create-PS-Record:
+    name: "금일 알고리즘 문제풀이 기록"
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name: set Today Date
+        run: echo TODAY_DATE=$(date +%Y년\ %m월\ %d일) >> $GITHUB_ENV
 
-      - name: Set up Git
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+      - name: fetch repository info
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
 
-      - name: Get today's date
-        id: date
-        run: |
-          echo "folder_name=$(date '+%Y년 %m월 %d일')" >> $GITHUB_OUTPUT
+      - name: make directory with today's date & move solved code
+        run: mkdir "$(date '+%Y년 %m월 %d일')" && mv *.py "$('date +%Y년 %m월 %d일')" || mv *.py "$(date '+%Y년 %m월 %d일')"
 
-      - name: Create folder if it doesn't exist
-        run: |
-          mkdir -p "${{ steps.date.outputs.folder_name }}"
+      - name: show current directory (to check mkdir's success)
+        run: ls
 
-      - name: Move Python files to today's folder
-        run: |
-          for file in *.py; do
-            if [ -f "$file" ]; then
-              mv "$file" "${{ steps.date.outputs.folder_name }}/"
-              echo "$file" >> moved_files.txt
-            fi
-          done
-
-      - name: Commit and push changes
-        if: success()
-        run: |
-          if [ -s moved_files.txt ]; then
-            file_list=$(cat moved_files.txt | paste -sd ", " -)
-            git add .
-            git commit -m "${{ steps.date.outputs.folder_name }} 문제 추가 : $file_list"
-            git push
-          else
-            echo "No Python files moved."
-          fi
+      - name: overlap commit
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: ${{ env.TODAY_DATE }} 문제 풀이 기록
+          commit_user_name: Chanmin, Kim <kimchanmin1@gmail.com>
+          commit_author: "Chanmin, Kim <kimchanmin1@gmail.com>"
