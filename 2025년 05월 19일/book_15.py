@@ -16,10 +16,17 @@ way = deque([x])                    # 큐 선언하며 바로 시작점 넣어�
 
 while way:
     nx = way.popleft()              # 함수 뒤에 () 붙이는 거 잊지 말자
-    for next_node in way[nx]:
+    for next_node in city[nx]:       # bfs 정석 풀이
         if distance[next_node] == -1:
             distance[next_node] = distance[nx]+1
             way.append(next_node)
 
 # 결과 출력
-found = False
+found = False                       # -1 출력을 위한
+
+for i in range(1,n+1):
+    if distance[i] == k:
+        print(i)
+        found=True
+if found == False:
+    print(-1)
