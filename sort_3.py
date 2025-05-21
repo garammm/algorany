@@ -15,7 +15,7 @@ def quick_sort(array, start, end):
             left += 1           # 기준보다 작으면 다음
 
         # 피벗보다 작은 데이터를 작을 때까지 반복(오른쪽은 작은 데이터 찾기)
-        while right > start and array[right] >= array[pivot]:
+        while right > start and array[right]:
             right -= 1
         # 엇갈렸다면 작은 데이터와 피벗을 교체
         if left > right:    
@@ -27,6 +27,6 @@ def quick_sort(array, start, end):
     quick_sort(array, start, right -1)
     quick_sort(array, right+1, end)
     
-quick_sort(array, 0, len(array)-1)              # 0~9까지, 마지막 수 포함
+quick_sort(array, 0, len(array)-1)              # 0~9까지 -> 마지막 수 포함..
 
 print(array)
