@@ -16,7 +16,7 @@ def dijkstra(start):
     heapq.heappush(q, (0, start))            # 거리, 노드 순으로 넣어야  heapq 사용 가능
     distance[start]=0
     while q:
-        dist, node = heapq.heappop()
+        dist, node = heapq.heappop(q)
         if distance[node] < dist:
             continue
         for next_node, cost in graph[node]:
