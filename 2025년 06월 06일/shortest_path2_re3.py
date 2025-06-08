@@ -30,7 +30,7 @@ for k in range(1,n+1):
             graph[a][b] = min(graph[a][b], graph[a][k] + graph[k][b])
 
 # 수행된 결과를 출력
-distance = graph[1][k] + graph [k][x]
+distance = graph[1][k] + graph [k][b]
 
 if distance >= INF:
     print("-1")
