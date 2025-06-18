@@ -1,5 +1,6 @@
 # 2792
-# 이해도 필요하고 코드 암기도 필요하고..
+# 이해도 필요하고 코드 암기도 필요하고.. 
+# 솔직히 이해가..
 
 n, m = map(int, input().split())
 jewels = list(map(int, input().split()))
