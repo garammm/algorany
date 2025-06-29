@@ -36,7 +36,7 @@ test_case = 1
 while True:
     # 문자열에서 오른쪽 끝 부분에 있는 공백 문자들을 제거할 때 쓰느 함수
     string = input().rstrip()     
-    if string[0] == '-':   # 종료 조건
+    if string == '-':   # 종료 조건
         break
     result = answer(string)
     # 테스트케이스 번호. 답 형식으로 출력해야 하므로
