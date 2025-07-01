@@ -1,3 +1,5 @@
+import sys
+
 def answer(string):
     stack = [] 
 
@@ -34,11 +36,14 @@ def answer(string):
 
 test_case = 1
 while True:
-    # 문자열에서 오른쪽 끝 부분에 있는 공백 문자들을 제거할 때 쓰느 함수
-    string = input().rstrip()     
-    if string == '-':   # 종료 조건
+    try:
+        string = input().rstrip()
+    except EOFError:
         break
+
+    if string == '-':
+        break
+
     result = answer(string)
-    # 테스트케이스 번호. 답 형식으로 출력해야 하므로
     print(f"{test_case}. {result}")
     test_case += 1
