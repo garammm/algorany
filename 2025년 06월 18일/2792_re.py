@@ -1,33 +1,30 @@
-# 이진탐색은 나중에 꼭 다시 풀어보자...
-import math
+# 너무 답답한 나머지 구글링 시작...
+# 지금은 어케저케 이해는 했는데 이거 나중에 다시 풀어보자 어렵다..
 
-try:
-    n, m = map(int, input().split()) # n 보석 개수, 친구수 m
-    jewels = []
-    for _ in range(n):
-        jewels.append(int(input()))
-except EOFError:
-    # 입력이 없으면 종료
-    exit(0)
+import sys
+input = sys.stdin.readline          # 메모리 줄임
 
-# 이 부분이 특이하다
-def binary_search(jewels, max_per_friend, m):
-    count = 0
-    for jewel in jewels:
-        # 각 상자를 max_per_friend 개씩 나눌 떄 필요한 친구 수
-        count += math.ceil(jewel/max_per_friend)
-    return count <= m
-    
-start = 1
-end = max(jewels)
-result = end
+n,m = map(int, input().split())     # n이 학생, m이 색상
+jewerls = []
 
-while start <= end:
-    mid = (start + end)//2
-    if binary_search(jewels, mid, m):
-        result = mid
-        end = mid - 1
+for i in range(m):
+    jewerls.append(int(input()))
+
+start = 1                           
+end = max(jewerls)
+answer = 0
+
+while start<=end:
+    mid = (start+end)//2
+    sum = 0
+    for i in range(len(jewerls)):
+        sum+=jewerls[i]//mid
+        if jewerls[i]//mid:
+            sum += 1
+    if sum > n:
+        start = mid+1
     else:
-        start = mid + 1
+        end=mid-1
+        answer=mid
+print(answer)
 
-print(result)
