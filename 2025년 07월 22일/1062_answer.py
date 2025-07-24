@@ -1,47 +1,33 @@
+# 나중에 다시 풀어보기... 다시 풀 수 있으려나..
 from itertools import combinations
-import sys
-input = sys.stdin.read
 
-data = input().split()
-n = int(data[0])
-k = int(data[1])
-words = data[2:]
+n, k = map(int, input().split())
+required = set('antic')  # 반드시 배워야 하는 기본 문자
+words = []
 
-# 기본적으로 반드시 배워야 하는 5글자
-required = set('antic')
-
-# 배울 수 있는 글자가 5보다 작으면 어떤 단어도 못 읽음
+# k < 5면 기본 문자도 못 배우므로 단어를 하나도 못 읽음
 if k < 5:
     print(0)
     exit()
 
-# 단어들에서 기본 문자 제외 후 남은 알파벳만 추림
-processed_words = []
+# 단어 입력 처리
 all_chars = set()
+for _ in range(n):
+    word = input().strip()
+    remain = set(word) - required
+    words.append(remain)
+    all_chars.update(remain)
 
-for word in words:
-    unique = set(word) - required
-    processed_words.append(unique)
-    all_chars.update(unique)
-
-# 배울 수 있는 나머지 글자 수
-rest = k - 5
-
-# 가르칠 수 있는 모든 조합 중 최대 읽을 수 있는 단어 수 찾기
-max_count = 0
-
-# 예외: 가르칠 수 있는 알파벳이 남은 모든 알파벳 이상이면 전부 읽힘
-if len(all_chars) <= rest:
+# 만약 배울 수 있는 알파벳이 남은 모든 문자보다 많다면 전부 읽을 수 있음
+if k == 26 or len(all_chars) <= (k - 5):
     print(n)
     exit()
 
-# 모든 가능한 조합 순회
-for comb in combinations(all_chars, rest):
-    teach = set(comb)
-    count = 0
-    for word_chars in processed_words:
-        if word_chars <= teach:
-            count += 1
+# 가능한 모든 조합을 탐색하여 최대 읽을 수 있는 단어 수 계산
+max_count = 0
+for comb in combinations(all_chars, k - 5):
+    learned = set(comb) | required
+    count = sum(1 for w in words if w <= learned)
     max_count = max(max_count, count)
 
 print(max_count)
